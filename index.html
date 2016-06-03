@@ -1,3 +1,36 @@
+<?php
+$username = htmlspecialchars($_POST['username']);
+$password = htmlspecialchars($_POST['password']);
+if ($usrename && $password){
+	$connect = mysql_connect("192.168.1.23","root","Aadhi411888") or die("SQL Connection Failed");
+	mysql_select_db("chat") or die ("Database Connection Failed");
+	$query = mysql_query("SELECT * FROM users WHERE username='$username';
+	$rows = mysql_num_rows($query);
+	
+	if($rows !==0){
+		while($row = mysql_fetch_assoc($query))
+		{
+			$dbusername = $row['usrname'];
+			$dbpassword = $row['password'];
+		}
+		
+		if($username==$dbusername && $password==$dbpassword)
+		{
+			echo "Success";
+			<script type="text/javascript">alert("Success");</script>
+			$_SESSION['username'] = $username;
+		}else{
+			echo "Failed";
+			<script type="text/javascript">alert("Failure");</script>
+		}
+	}else{
+		echo "No user found";
+	}
+}else{
+	echo "Enter Something";
+}
+?>
+
 <!DOCTYPE HTML>
 <head>
 <meta charset="UTF-8">
@@ -75,36 +108,3 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 </div>
 </body>
 </html>
-
-<?php
-$username = htmlspecialchars($_POST['username']);
-$password = htmlspecialchars($_POST['password']);
-if ($usrename && $password){
-	$connect = mysql_connect("192.168.1.23","root","Aadhi411888") or die("SQL Connection Failed");
-	mysql_select_db("chat") or die ("Database Connection Failed");
-	$query = mysql_query("SELECT * FROM users WHERE username='$username';
-	$rows = mysql_num_rows($query);
-	
-	if($rows !==0){
-		while($row = mysql_fetch_assoc($query))
-		{
-			$dbusername = $row['usrname'];
-			$dbpassword = $row['password'];
-		}
-		
-		if($username==$dbusername && $password==$dbpassword)
-		{
-			echo "Success";
-			<script type="text/javascript">alert("Success");</script>
-			$_SESSION['username'] = $username;
-		}else{
-			echo "Failed";
-			<script type="text/javascript">alert("Failure");</script>
-		}
-	}else{
-		echo "No user found";
-	}
-}else{
-	echo "Enter Something";
-}
-?>
