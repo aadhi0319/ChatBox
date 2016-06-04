@@ -78,13 +78,14 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 </html>
 
 <?php
+if ($_POST['submit']){
 define('DB_HOST', '192.168.1.23');
 define('DB_NAME', 'chat');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'Aadhi411888');
 $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to mysql.");
 $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to database.");
-
+echo "stage 2";
 $username = mysql_real_escape_string($_POST["username"]);
 $password = mysql_real_esacpe_string($_POST["password"]);
 
@@ -96,5 +97,6 @@ if ($row[0]>0){
 	echo "<script>alert('Login Successful');</script>";
 }else{
  	echo "<script>alert('Login Failed');</script>";
+}
 }
 ?>
