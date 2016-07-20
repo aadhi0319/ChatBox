@@ -19,7 +19,7 @@
 
 html { width: 100%; height:100%; overflow:hidden; }
 
-body { 
+body {
     width: 100%;
     height:100%;
     font-family: 'Open Sans', sans-serif;
@@ -31,7 +31,7 @@ body {
     background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
 }
-.login { 
+.login {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -41,9 +41,9 @@ body {
 }
 .login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; font-family:"Verdana", cursive, sans-serif; }
 
-input { 
-    width: 100%; 
-    margin-bottom: 10px; 
+input {
+    width: 100%;
+    margin-bottom: 10px;
     background: rgba(0,0,0,0.3);
     border: none;
     outline: none;
@@ -65,38 +65,50 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 </head>
 
 <body>
-<h1 style="text-align:center; color:white; font-weight:1200; padding-left: 230px;">Welcome to ChatBox <a href="#" style="float:right; padding-right: 30px; text-decoration:none;" ><input type="button" value="Create Account" class="btn btn-primary btn-block btn-large" style="width: 200px;"></button></a>
+<h1 style="text-align:center; color:white; font-weight:1200; padding-left: 230px;">Welcome to ChatBox <a href="create.php" style="float:right; padding-right: 30px; text-decoration:none;" ><input type="button" value="Create Account" class="btn btn-primary btn-block btn-large" style="width: 200px;"></button></a>
 <div class="login">
     <h1 style="font-size: 25pt;">login</h1>
-    <form method="post" action="index.php">
-        <input type="text" name="username" placeholder="username" required="required" />
-        <input type="password" name="password" placeholder="password" required="required" />
-        <button type="submit" name="submit" class="btn btn-primary btn-block btn-large">submit</button>
+    <form method="POST" action="index.php">
+        <input type="text" id="username" name="username" placeholder="username" required="required" />
+        <input type="password" id="password" name="password" placeholder="password" required="required" />
+        <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block btn-large">submit</button>
     </form>
 </div>
 </body>
 </html>
 
 <?php
-if ($_POST['submit']){
-define('DB_HOST', '192.168.1.23');
-define('DB_NAME', 'chat');
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'Aadhi411888');
-$con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to mysql.");
-$db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to database.");
-echo "stage 2";
-$username = mysql_real_escape_string($_POST["username"]);
-$password = mysql_real_esacpe_string($_POST["password"]);
+define('DB_HOST','127.0.0.1');
+define('DB_NAME','chat');
+define('DB_USER','root');
+define('DB_PASSWORD','Aadhi411888');
 
-$sql = "SELECT COUNT(*) FROM users WHERE username='$username' AND password='$password'";
-$res = mysql_query($sql);
-$row = mysql_fetch_array($res);
+$con= mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to mysql.");
+$db = mysqli_select_db($con, DB_NAME) or die("Failed to connect to database.");
 
-if ($row[0]>0){
-	echo "<script>alert('Login Successful');</script>";
+if($_POST["username"]){
+$username = htmlspecialchars(mysqli_real_escape_string($con,$_POST["username"]));
+$password = htmlspecialchars(mysqli_real_escape_string($con,$_POST["password"]));
+
+$query = mysqli_query($con, "SELECT password, salt FROM users WHERE username='$username'");
+$numrows = mysqli_num_rows($query);
+$data = mysqli_fetch_assoc($query);
+
+if($data["password"]==$password){
+$statement = "";
 }else{
- 	echo "<script>alert('Login Failed');</script>";
+$statement = "Incorrect login credentials. Please try again.";
 }
 }
+
+mysqli_close($con);
 ?>
+
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<p style="color:red; position:relative; text-align:bottom; padding-top: 300px;"><font size="4"><?php echo $statement; ?></font></p>
+</body>
+</html>
