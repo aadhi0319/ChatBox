@@ -65,6 +65,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 </head>
 
 <body>
+<div class="container">
 <h1 style="text-align:center; color:white; font-weight:1200; padding-left: 230px;">Welcome to ChatBox <a href="create.php" style="float:right; padding-right: 30px; text-decoration:none;" ><input type="button" value="Create Account" class="btn btn-primary btn-block btn-large" style="width: 200px;"></button></a>
 <div class="login">
     <h1 style="font-size: 25pt;">login</h1>
@@ -73,6 +74,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
         <input type="password" id="password" name="password" placeholder="password" required="required" />
         <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block btn-large">submit</button>
     </form>
+</div>
 </div>
 </body>
 </html>
