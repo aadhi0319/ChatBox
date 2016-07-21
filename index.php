@@ -114,3 +114,10 @@ mysqli_close($con);
 <p style="color:red; position:relative; text-align:bottom; padding-top: 300px;"><font size="4"><?php echo $statement; ?></font></p>
 </body>
 </html>
+
+
+
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<div class="g-recaptcha" data-sitekey="6LfrlSUTAAAAACl72lZqJlJdN1uu7EAoCRtKWuOY"></div>
+6LfrlSUTAAAAAL_ipTTB9U3YEwcVlfO9F_GZ3cxK
